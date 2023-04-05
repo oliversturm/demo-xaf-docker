@@ -1,5 +1,6 @@
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.EF;
+using System.ComponentModel;
 
 namespace XAFApp.Module.BusinessObjects {
   [DefaultClassOptions]
@@ -7,6 +8,7 @@ namespace XAFApp.Module.BusinessObjects {
     public SaleProduct() {
     }
 
+    [DisplayName("Product Name")]
     public virtual string Name { get; set; }
     public virtual decimal? Price { get; set; }
   }
