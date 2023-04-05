@@ -12,7 +12,7 @@ services:
     volumes:
       - sql-data:/var/opt/mssql
 
-  xaf:
+  webapi:
     build:
       context: ./XAFApp
       args:
