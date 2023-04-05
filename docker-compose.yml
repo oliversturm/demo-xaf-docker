@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  sql:
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      ACCEPT_EULA: 1
+      MSSQL_SA_PASSWORD: ${SQL_SA_PASSWD}
+      MSSQL_TELEMETRY_ENABLED: 'FALSE'
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - sql-data:/var/opt/mssql
+
+  xaf:
+    build:
+      context: ./XAFApp
+      args:
+        DXNUGETKEY: ${DXNUGETKEY}
+        STARTSCRIPT: '/src/start-webapi.sh'
+    depends_on:
+      - sql
+    environment:
+      SQL_DBNAME: ${SQL_DBNAME}
+      SQL_SA_PASSWD: ${SQL_SA_PASSWD}
+      DOTNET_WATCH_RESTART_ON_RUDE_EDIT: 1
+    ports:
+      - '5273:5273'
+    volumes:
+      - ./XAFApp:/src
+
+  blazor:
+    build:
+      context: ./XAFApp
+      args:
+        DXNUGETKEY: ${DXNUGETKEY}
+        STARTSCRIPT: '/src/start-blazor.sh'
+    depends_on:
+      - sql
+    environment:
+      SQL_DBNAME: ${SQL_DBNAME}
+      SQL_SA_PASSWD: ${SQL_SA_PASSWD}
+      DOTNET_WATCH_RESTART_ON_RUDE_EDIT: 1
+    ports:
+      - '5274:5274'
+    volumes:
+      - ./XAFApp:/src
+
+volumes:
+  sql-data:

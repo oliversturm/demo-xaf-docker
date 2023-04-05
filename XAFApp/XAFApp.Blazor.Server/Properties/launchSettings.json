@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "XAFDemoApp.Blazor.Server": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://*:5274",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
